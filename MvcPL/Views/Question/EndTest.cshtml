@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "EndTest";
+}
+@using (Html.BeginForm("ShowResult", "Result"))
+{
+    <div class="pull-right">
+        @Html.Hidden("resultId", (int)TempData["ResultId"])
+        <input type="submit" class="btn btn-success" value="ShowDetails" />
+    </div>
+}
+<h2>EndTest</h2>

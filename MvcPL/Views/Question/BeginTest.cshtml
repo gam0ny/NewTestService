@@ -1,0 +1,67 @@
+﻿@model MvcPL.Models.Question.QestionListViewModel
+
+@{
+    ViewBag.Title = "Question";
+}
+@*<script type="text/javascript">
+  function startTimer() {
+      var my_timer = document.getElementById("my_timer");
+    var time = my_timer.innerHTML;
+    var arr = time.split(":");
+    var h = arr[0];
+    var m = arr[1];
+    var s = arr[2];
+    if (s == 0) {
+      if (m == 0) {
+        if (h == 0) {
+          alert("Время вышло");
+          window.location.reload();
+          return;
+        }
+        h--;
+        m = 60;
+        if (h < 10) h = "0" + h;
+      }
+      m--;
+      if (m < 10) m = "0" + m;
+      s = 59;
+    }
+    else s--;
+    if (s < 10) s = "0" + s;
+    document.getElementById("my_timer").innerHTML = h+":"+m+":"+s;
+    setTimeout(startTimer, 1000);
+  }
+</script>
+<body onload="startTimer()">
+    <p><span id="my_timer" style="color: #f00; font-size: 150%; font-weight: bold;">00:10:00</span></p>
+    </body>*@
+    @foreach (var p in Model.Questions)
+
+    {
+        @Html.Partial("QuestionsSummary", p)
+
+    }
+    @foreach (var qa in Model.QuestionAnswers)
+
+    {
+        using (Html.BeginForm("SetAnswer", "Question"))
+        {
+            <div class="text-left">
+                @Html.Hidden("Id", qa.Id)
+                @Html.Hidden("questionId", qa.QuestionId)
+                @Html.Hidden("correct", qa.Correct)
+                @Html.Hidden("cost", Model.Questions.Where(x => x.Id == qa.QuestionId).FirstOrDefault().Cost)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="@qa.Content" />
+            </div>
+        }
+    }
+    <p>
+        <div class="btn-group pull-right">
+            @Html.PageLinks(Model.QuestionInfo, x => Url.Action("BeginTest", new { testId = Model.Questions.First().TestId, page = x }))
+        </div>
+        <div class="panel-footer">
+            @Html.ActionLink("Save answers", "EndTest", null,
+            new { @class = "btn btn-default" })
+        </div>
+    </p>

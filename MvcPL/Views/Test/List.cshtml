@@ -1,0 +1,14 @@
+﻿@model MvcPL.Models.Test.TestsListViewModel
+
+@{
+    ViewBag.Title = "Tests";
+}
+
+@foreach (var p in Model.Tests)
+
+{
+    @Html.Partial("TestsSummary", p)
+}
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+</div>

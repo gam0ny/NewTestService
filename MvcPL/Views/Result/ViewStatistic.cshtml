@@ -1,0 +1,11 @@
+﻿@model MvcPL.Models.Result.AllTestResultViewModel
+
+@{
+    ViewBag.Title = "Results";
+}
+
+@foreach (var p in Model.Results)
+
+{
+    @Html.Partial("ResultsSummary", p)
+}

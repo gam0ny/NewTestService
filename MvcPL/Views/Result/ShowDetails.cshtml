@@ -1,0 +1,51 @@
+﻿@model MvcPL.Models.Result.TestResultDetailsViewModel
+
+@{
+    ViewBag.Title = "ShowDetails";
+}
+
+@foreach (var p in Model.Questions)
+
+{
+    @Html.Partial("QuestionsSummary", p)
+
+}
+@if (Model.QuestionAnswers != null)
+{
+    if (Model.QuestionAnswers.Correct)
+    {
+        using (Html.BeginForm())
+        {
+        <div class="text-left">
+            <input type="submit" class="btn btn-success" value="@Model.QuestionAnswers.Content" />
+        </div>
+
+        }
+    }
+    else
+    {
+        using (Html.BeginForm())
+        {
+    <div class="text-left">
+    <input type="submit" class="btn btn-danger" value="@Model.QuestionAnswers.Content" />
+    </div>
+        }
+    }
+}
+else
+{
+    
+        using (Html.BeginForm())
+        {
+            <div class="text-left">
+                <input type="submit" class="btn btn-danger" value="No answer" />
+            </div>
+        }
+    
+}
+<p>
+    <div class="btn-group pull-right">
+        @Html.PageLinks(Model.QuestionInfo, x => Url.Action("ShowDetails", new { resultId= TempData["ResultId"],  testId = Model.Questions.First().TestId, page = x }))
+    </div>
+
+</p>

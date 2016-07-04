@@ -1,0 +1,19 @@
+﻿@model MvcPL.Models.Result.ResultViewModel
+<div class="well">
+    <h3>
+        <strong>
+
+            @Model.Id </ strong >
+            <span class="pull-right label label-primary">Mark @Model.Mark </ span >
+    </h3>
+    @using (Html.BeginForm("ShowDetails", "Result"))
+    {
+        <div class="pull-right">
+            @Html.Hidden("resultID", Model.Id)
+            @Html.Hidden("testID", Model.TestId)
+            <input type="submit" class="btn btn-success" value="Show details" />
+        </div>
+    }
+    <span class="lead">@Model.Date </ span >
+</div>
+
